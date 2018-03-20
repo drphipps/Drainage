@@ -49,7 +49,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Flow Direction :</string>
+    <string>Flow direction :</string>
    </property>
   </widget>
   <widget class="QComboBox" name="cmbShape">
@@ -127,7 +127,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Point Shape :</string>
+    <string>Outlet point :</string>
    </property>
   </widget>
  </widget>

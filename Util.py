@@ -246,9 +246,10 @@ class util:
 
 
     def Convert_ASCii_To_TIFF(self,inputfile,OutFile):
+        gdal_translate = "C:\Program Files\GDAL\gdal_translate.exe"
         arg = '"{0}" -of GTiff  "{1}" "{2}"'.format(gdal_translate,inputfile,OutFile)
         self.Execute(arg)
-        self.Addlayer_OutputFile(Output)
+        # self.Addlayer_OutputFile(Output)
 
     def Convert_TIFF_To_ASCii_retpaht(self,inputfile):
         Extension=""
@@ -287,11 +288,12 @@ class util:
 
     def ASC_Header_nodata(self,asc_file):
         self.nodata=""
-        dataHeaderItems = open(asc_file).readlines()[6:7]
+        dataHeaderItems = open(asc_file).readlines()[:6]
         read_lower = [item.lower() for item in dataHeaderItems]  # 리스트 의 모든 글자를 소문자화 시킴
         for row in read_lower:
-            self.nodata=row.replace("nodata_value","").strip()
-
+            if "nodata_value" in row:
+                self.nodata=row.replace("nodata_value","").strip()
+                break
         return self.nodata
 
     def ASC_Replace_data(self,data,file):

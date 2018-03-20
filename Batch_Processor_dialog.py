@@ -66,6 +66,24 @@ class BatchProcessor(QtGui.QDialog, FORM_CLASS):
             _util.MessageboxShowInfo("Batch Processor", "\n The file path contains Korean. \n")
             return
 
+        fname, ext = os.path.splitext(self.LayerPath)
+        if ext.upper() in ".ASC":
+            _util.MessageboxShowInfo("1","asc")
+            inputfile=self.LayerPath
+            self.LayerPath=self.LayerPath.replace(ext,".TIF")
+            _util.Convert_ASCii_To_TIFF(inputfile,self.LayerPath)
+            _util.MessageboxShowInfo("Layerpath",self.LayerPath)
+
+            # return
+        elif ext.upper() in ".TIF":
+            _util.MessageboxShowInfo("1", "tif")
+            pass
+        else :
+            _util.MessageboxShowInfo("Batch Processor","Only ASCII files and TIF file formats are supported.")
+            return
+
+
+
         #파일 이름이 없는 텍스트 박스 확인
         self.checkTextbox(self.txtFill)
         # self.checkTextbox(self.txtFlat)
@@ -135,13 +153,14 @@ class BatchProcessor(QtGui.QDialog, FORM_CLASS):
                         StreamResult=self.ExecuteArg(arg,self.Stream)
                         if (StreamResult):
                             arg=self.CreateStreamVector()
-#                             _util.MessageboxShowInfo("arg",arg)
+
                             StreamVectorResult = self.ExecuteArg(arg, self.StreamVector)
                             if (StreamVectorResult):
                                 #tif 파일 asc 파일로 변환
                                 self.ConvertTiff_To_Asc()
                                 self.Delete_tempfile()
                                 _util.MessageboxShowInfo("Batch processor","The process is complete.")
+                                self.close()
     #arg 받아서 처리 완료 되면 레이어  Qgis 에서 올림
     def ExecuteArg(self,arg,outpath):
         returnValue=_util.Execute(arg)
@@ -261,7 +280,7 @@ class BatchProcessor(QtGui.QDialog, FORM_CLASS):
 
         # # 라디오 버튼 기본 설정
         self.chkStream.stateChanged.connect(self.checkbox_Stream)
+        self.chkStream.setChecked(True)
+        self.checkbox_Stream()
 
-        # 텍스트 박스 비활성화
-        self.txtStreamVector.setEnabled(False)
 

@@ -32,6 +32,9 @@ import Drainage
 FORM_CLASS, _ = uic.loadUiType(os.path.join(
     os.path.dirname(__file__), 'Watershed_dialog_base.ui'))
 
+
+
+_Prj_Back_Path =""
 _util = Util.util()
 class WatershedDialog(QtGui.QDialog, FORM_CLASS):
 
@@ -137,14 +140,17 @@ class WatershedDialog(QtGui.QDialog, FORM_CLASS):
         if self.rcsr!=self.scsr:
             self.aboutApp()            
             #_util.MessageboxShowInfo(" Caution!!", "If the coordinate system of the two layers are different, there may be a problem in the watershed processing. ")
+        self.checkPrjFile(self.Shape)
 
         # 타우프로그램 실행 시킬 arg 문자열 받아 오기
         arg = _util.GetWatershed(self.TifPath ,self.Shape, self.txtOutput.text())
         returnValue=_util.Execute(arg)
         if returnValue==0:
             self.Addlayer_OutputFile(self.txtOutput.text())
+            self.checkPrjFile_back()
+
             _util.MessageboxShowInfo("Watershed", "processor complete")
-            #self.close()
+            self.close()
 
     def layerCRS(self,layer):
         lyrCRS = layer.crs()
@@ -152,6 +158,27 @@ class WatershedDialog(QtGui.QDialog, FORM_CLASS):
             return lyrCRS.toProj4()
         else:
             return ""
+
+
+    def checkPrjFile(self,shapefile):
+        global _Prj_Back_Path
+        file_ex = os.path.splitext(shapefile)
+        ext=file_ex[1]
+        ext2 = _util.GetFilename(shapefile)
+        ReplaceFile=shapefile.replace(ext,".prj")
+
+        backfile = ReplaceFile.replace(ext2,ext2+"_back" )
+        _Prj_Back_Path = backfile
+        if _util.CheckFile(ReplaceFile):
+            os.rename(ReplaceFile,backfile)
+
+
+    def checkPrjFile_back(self):
+        if _util.CheckFile(_Prj_Back_Path):
+            Reback_name_file = _Prj_Back_Path.replace("_back","")
+            os.rename(_Prj_Back_Path,Reback_name_file)
+
+
 
     #정보창 띄움
     def aboutApp(self):

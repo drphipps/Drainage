@@ -8,7 +8,6 @@ Your QGIS plugin directory is located at:
 
 What's Next:
 
-
   * Copy the entire directory containing your new plugin to the QGIS plugin
     directory
 

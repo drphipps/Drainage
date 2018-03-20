@@ -106,9 +106,9 @@ class DrainageDockWidget(QtGui.QDockWidget, FORM_CLASS):
         item18 = QtGui.QTreeWidgetItem(item10, ['Watershed'])
         icon = QtGui.QIcon(Cube)
         item18.setIcon(0, icon)
-#         item19 = QtGui.QTreeWidgetItem(item10, ['Catchment Polygon Delination'])
-#         icon = QtGui.QIcon(Cube)
-#         item19.setIcon(0, icon)
+        # item19 = QtGui.QTreeWidgetItem(item10, ['Catchment Polygon Delination'])
+        # icon = QtGui.QIcon(Cube)
+        # item19.setIcon(0, icon)
 
 
         ##좌표계정보확인용 
@@ -152,9 +152,9 @@ class DrainageDockWidget(QtGui.QDockWidget, FORM_CLASS):
             results_dialog = BatchProcessor()
             results_dialog.exec_()
 
-#         elif SelectItme =='Catchment GRID Delination':
-#             results_dialog = CatchmentDialog()
-#             results_dialog.exec_()
+        # elif SelectItme =='Catchment GRID Delination':
+        #     results_dialog = CatchmentDialog()
+        #     results_dialog.exec_()
         elif SelectItme == "Create OutletPoint Layer and Draw OutletPoint":
             _util.MessageboxShowInfo("info","The base layer and coordinate information must be created identically.")
             Drainage._iface.actionNewVectorLayer().trigger()
