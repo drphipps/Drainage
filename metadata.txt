@@ -10,14 +10,14 @@
 name=Drainage
 qgisMinimumVersion=2.18
 description=Drainage
-version=0.1.1
-author=HermeSys
+version=0.1.2
+author=KICT, HermeSys
 email=shpark@hermesys.co.kr
 
-about=Drainage test
+about=Beta Drainage plugin
 
-tracker=Drainage
-repository=Drainage
+#tracker=Drainage
+#repository=Drainage
 # End of mandatory metadata
 
 # Recommended items:
@@ -28,8 +28,8 @@ repository=Drainage
 # Tags are comma separated with spaces allowed
 tags=Drainage
 
-homepage=Drainage
-category=Raster
+homepage=https://github.com/floodmodel/repository
+category=Raster 
 icon=icon.png
 # experimental flag
 experimental=True

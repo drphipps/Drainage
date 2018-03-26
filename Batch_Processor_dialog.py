@@ -68,15 +68,15 @@ class BatchProcessor(QtGui.QDialog, FORM_CLASS):
 
         fname, ext = os.path.splitext(self.LayerPath)
         if ext.upper() in ".ASC":
-            _util.MessageboxShowInfo("1","asc")
+            # _util.MessageboxShowInfo("1","asc")
             inputfile=self.LayerPath
             self.LayerPath=self.LayerPath.replace(ext,".TIF")
             _util.Convert_ASCii_To_TIFF(inputfile,self.LayerPath)
-            _util.MessageboxShowInfo("Layerpath",self.LayerPath)
+            # _util.MessageboxShowInfo("Layerpath",self.LayerPath)
 
             # return
         elif ext.upper() in ".TIF":
-            _util.MessageboxShowInfo("1", "tif")
+            # _util.MessageboxShowInfo("1", "tif")
             pass
         else :
             _util.MessageboxShowInfo("Batch Processor","Only ASCII files and TIF file formats are supported.")
@@ -85,12 +85,35 @@ class BatchProcessor(QtGui.QDialog, FORM_CLASS):
 
 
         #파일 이름이 없는 텍스트 박스 확인
-        self.checkTextbox(self.txtFill)
+        if self.checkTextbox(self.txtFill):
+            pass
+        else:
+            return
+
         # self.checkTextbox(self.txtFlat)
-        self.checkTextbox(self.txtFD )
-        self.checkTextbox(self.txtFAC)
-        self.checkTextbox(self.txtSlope)
-        self.checkTextbox(self.txtStream)
+
+
+        if self.checkTextbox(self.txtFD ):
+            pass
+        else:
+            return
+
+        if self.checkTextbox(self.txtFAC):
+            pass
+        else:
+            return
+
+
+        if self.checkTextbox(self.txtSlope):
+            pass
+        else:
+            return
+
+
+        if self.checkTextbox(self.txtStream):
+            pass
+        else:
+            return
 
 
         if self.txtCellValue.text() == "":
@@ -223,7 +246,9 @@ class BatchProcessor(QtGui.QDialog, FORM_CLASS):
          if txt.text() == "":
             _util.MessageboxShowInfo("Batch Processor", " A filename is required. ")
             txt.setFocus()
-            return
+            return False
+         else:
+             return True
 
     #기본 변수 초기화
     def Settingfile(self):

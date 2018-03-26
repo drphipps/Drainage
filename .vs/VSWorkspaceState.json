@@ -1,8 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\DownloadDocument"
+    "\\DownloadDocument",
+    "\\DownloadDocument\\old_Document"
   ],
-  "SelectedNode": "\\metadata.txt",
+  "SelectedNode": "\\DownloadDocument\\QGIS PlugIn-Drainage Tutorial_20180326.pdf",
   "PreviewInSolutionExplorer": false
 }
