@@ -8,7 +8,7 @@
 
 [general]
 name=Drainage
-qgisMinimumVersion=2.18
+qgisMinimumVersion=2.18.13
 description=Drainage
 version=0.1.2
 author=KICT, HermeSys
