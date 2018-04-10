@@ -231,18 +231,38 @@ class util:
         s = os.path.split(s[0])
         return  s[1]
 
-    def Convert_TIFF_To_ASCii(self,inputfile):
+    # def Convert_TIFF_To_ASCii(self,inputfile):
+    #     # nodata 설정옵션이 Gdal 에서 안먹음
+    #     Extension=""
+    #     Extension=os.path.splitext(inputfile)[1]
+    #     Output = inputfile.replace(Extension,".asc")
+    #     gdal_translate = "C:\Program Files\GDAL\gdal_translate.exe"
+    #     # arg = '"{0}" -of AAIGrid -ot Float64 -a_nodata -9999 --config GDAL_FILENAME_IS_UTF8 NO "{1}" "{2}"'.format(gdal_translate,inputfile,Output)
+    #     arg = '"{0}" -of AAIGrid "{1}" "{2}"'.format(gdal_translate, inputfile, Output)
+    #     result=self.Execute(arg)
+    #     if result == 0 :
+    #         # self.ASC_Header_replace(Output)
+    #         self.Addlayer_OutputFile(Output)
+
+    def Convert_TIFF_To_ASCii(self, inputfile):
         # nodata 설정옵션이 Gdal 에서 안먹음
-        Extension=""
-        Extension=os.path.splitext(inputfile)[1]
-        Output = inputfile.replace(Extension,".asc")
-        gdal_translate = "C:\Program Files\GDAL\gdal_translate.exe"
-        # arg = '"{0}" -of AAIGrid -ot Float64 -a_nodata -9999 --config GDAL_FILENAME_IS_UTF8 NO "{1}" "{2}"'.format(gdal_translate,inputfile,Output)
-        arg = '"{0}" -of AAIGrid "{1}" "{2}"'.format(gdal_translate, inputfile, Output)
-        result=self.Execute(arg)
-        if result == 0 :
+        Extension = os.path.splitext(inputfile)[1]
+        Output = inputfile.replace(Extension, ".asc")
+        gdal_translate = r'C:\Program Files\QGIS 2.18\bin\gdal_translate.exe'
+        arg = '"{0}" -of AAIGrid -co FORCE_CELLSIZE=TRUE "{1}" "{2}"'.format(gdal_translate, inputfile, Output)
+        result = self.Execute(arg)
+        if result == 0:
             self.ASC_Header_replace(Output)
             self.Addlayer_OutputFile(Output)
+
+
+
+
+
+
+
+
+
 
 
     def Convert_ASCii_To_TIFF(self,inputfile,OutFile):
@@ -282,13 +302,14 @@ class util:
 
     def ASC_Header_replace(self,asc_file):
         nodata=self.ASC_Header_nodata(asc_file)
-        self.ASC_Replace_data(nodata,asc_file)
+        if nodata !="" or nodata =="-9999":
+            self.ASC_Replace_data(nodata,asc_file)
 
 
 
     def ASC_Header_nodata(self,asc_file):
         self.nodata=""
-        dataHeaderItems = open(asc_file).readlines()[:6]
+        dataHeaderItems = open(asc_file).readlines()[:20]
         read_lower = [item.lower() for item in dataHeaderItems]  # 리스트 의 모든 글자를 소문자화 시킴
         for row in read_lower:
             if "nodata_value" in row:
