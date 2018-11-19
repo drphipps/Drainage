@@ -87,12 +87,11 @@ class util:
         tauPath = tauPath + "StreamNet.exe"
         arg = '"' + tauPath + '"' + ' -fel ' + '"' + input0 + '"' + ' -p ' + '"' + input1 + '"' + ' -ad8 ' + '"' + input2 + '"' + ' -src ' + '"' + input3 + '"' + ' -ord ' + '"' + output1 + '"' + ' -tree ' + '"' + output2 + '"' + ' -coord  ' + '"' + output3 + '"' + ' -net ' + '"' + output4 + '"' + ' -w ' + '"' + output5 + '"'
         return arg
-
+    
     def GetWatershed(self, input_layer, shape_layer,output):
         tauPath = self.GetTaudemPath() + "GageWatershed.exe"
-        arg = '"{0}" -p {1} -o {2} -gw {3}'.format(tauPath,input_layer, shape_layer,output)
+        arg = '"{0}" -p "{1}" -o "{2}" -gw "{3}"'.format(tauPath,input_layer, shape_layer,output)
         return arg
-
 
     #Watershed 처리
     def GetWatershedArg(self,fill_layer,fd_layer,fa_layer,txtstream_cellvalue,shp_layer,txtoutput,flag):
